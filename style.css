@@ -1,6 +1,8 @@
 *{margin:0;padding:0;}
-/*h1 + p,address,overview{display:none}*/
 overview{display:none}
+address:before{content:'Authors:';font-weight:bold;font-style:normal;}
+address span:before{content:',';}
+address span:last-child{display:none;}
 body{font-family:Helvetica,Arial,sans-serif;font-size:100%;color:#343434;}
 h1,h2,h3,h4,p,table,blockquote,.summary,.text,ol,ul{margin:20px 0;}
 h2{padding:20px 0 ;background-color:#eee;margin:40px 0 0 0;border-top:5px solid #ccc;}
@@ -12,71 +14,41 @@ div{line-height:140%;}
 ol,ul{list-style-position:outside;margin-left:1.4em;}
 li{margin:5px 0;}
 pre{background-color:#efefef;border:1px solid #ccc;padding:15px;}
-pre.bad {background-color:#ffcccc;border-color:red;}
+pre.bad{background-color:#ffcccc;border-color:red;}
 table{width:100%;}
 blockquote{border-top:5px solid #ccc;border-bottom:5px solid #ccc;font-size:90%;color:#555;}
 .summary{color:#555;border-left:3px solid #999;background-color:#efefef;padding:12px;}
 .text{overflow:auto;}
-.rule{border:3px solid #333;border-left:0;border-right:0;}
-.rule.collapsed{border:none;border-top:1px solid #ccc;padding:6px 0;}
+.rule{border:3px solid #333;border-left:0;border-right:0;position:relative;}
+.rule.collapsed{border:none;border-top:1px solid #ccc;padding:6px 0;cursor:pointer;}
 .rule.collapsed:hover{background-color:#efefef;color:#000;}
+.rule.collapsed:hover h3 a{display:inline;}
 .rule.collapsed > *{display:none;}
-.rule.collapsed h3{display:block;margin:0;font-weight:normal;font-size:100%;}
-.rule.collapsed h3 a{display:none;}
-.rule.collapsed h3:hover a{display:inline;}
+.rule.collapsed h3,.rule.collapsed .summary{vertical-align:text-bottom;line-height:100%;}
+.rule.collapsed h3{display:inline-block;margin:0;font-weight:normal;font-size:100%;}
+.rule.collapsed h3 a{display:none;position:absolute;right:0;}
+.rule.collapsed .summary{display:inline-block;border:none;padding:0;margin:0;text-overflow:ellipsis;white-space:nowrap;max-width:80%;overflow:hidden;font-size:85%;color:#666;background:none;}
+.rule.collapsed .summary p{display:inline}
+.rule.collapsed .summary:before{content:' - ';color:#999;}
 #wrapper{padding:20px;margin:0 auto;width:740px;}
 /*
 github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 */
 pre code{display:block;padding:0.5em;color:#000;background:#f8f8ff}
-pre .comment,
-pre .template_comment,
-pre .diff .header,
-pre .javadoc{color:#998;font-style:italic}
-pre .keyword,
-pre .css .rule .keyword,
-pre .winutils,
-pre .javascript .title,
-pre .lisp .title,
-pre .subst{color:#000;font-weight:bold}
-pre .number,
-pre .hexcolor{color:#40a070}
-pre .string,
-pre .tag .value,
-pre .phpdoc,
-pre .tex .formula{color:#d14}
-pre .title,
-pre .id{color:#900;font-weight:bold}
-pre .javascript .title,
-pre .lisp .title,
-pre .subst{font-weight:normal}
-pre .class .title,
-pre .haskell .label,
-pre .tex .command{color:#458;font-weight:bold}
-pre .tag,
-pre .tag .title,
-pre .rules .property,
-pre .django .tag .keyword{color:#000080;font-weight:normal}
-pre .attribute,
-pre .variable,
-pre .instancevar,
-pre .lisp .body{color:#008080}
+pre .comment,pre .template_comment,pre .diff .header,pre .javadoc{color:#998;font-style:italic}
+pre .keyword,pre .css .rule .keyword,pre .winutils,pre .javascript .title,pre .lisp .title,pre .subst{color:#000;font-weight:bold}
+pre .number,pre .hexcolor{color:#40a070}
+pre .string,pre .tag .value,pre .phpdoc,pre .tex .formula{color:#d14}
+pre .title,pre .id{color:#900;font-weight:bold}
+pre .javascript .title,pre .lisp .title,pre .subst{font-weight:normal}
+pre .class .title,pre .haskell .label,pre .tex .command{color:#458;font-weight:bold}
+pre .tag,pre .tag .title,pre .rules .property,pre .django .tag .keyword{color:#000080;font-weight:normal}
+pre .attribute,pre .variable,pre .instancevar,pre .lisp .body{color:#008080}
 pre .regexp{color:#009926}
 pre .class{color:#458;font-weight:bold}
-pre .symbol,
-pre .ruby .symbol .string,
-pre .ruby .symbol .keyword,
-pre .ruby .symbol .keymethods,
-pre .lisp .keyword,
-pre .tex .special,
-pre .input_number{color:#990073}
-pre .builtin,
-pre .built_in,
-pre .lisp .title{color:#0086b3}
-pre .preprocessor,
-pre .pi,
-pre .doctype,
-pre .shebang,
+pre .symbol,pre .ruby .symbol .string,pre .ruby .symbol .keyword,pre .ruby .symbol .keymethods,pre .lisp .keyword,pre .tex .special,pre .input_number{color:#990073}
+pre .builtin,pre .built_in,pre .lisp .title{color:#0086b3}
+pre .preprocessor,pre .pi,pre .doctype,pre .shebang,
 pre .cdata{color:#999;font-weight:bold}
 pre .deletion{background:#fdd}
 pre .addition{background:#dfd}

@@ -15,12 +15,12 @@ var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/<
 
     var xhr = new XMLHttpRequest(),
         body = document.body,
-        r;
+        html;
     
     xhr.open('GET', 'javascriptguide.xml', false);   
     xhr.send(null);
     
-    r = xhr.responseText.replace(
+    html = xhr.responseText.replace(
             /<CATEGORY\stitle="(.*?)">/gmi, function(s, title) {
             var l = title.replace(/\W/g,'_');
             return '<h2 id="'+l+'">'+title+'</h2>';
@@ -59,29 +59,45 @@ var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/<
     
     body.innerHTML = '' +
         '<div id="wrapper">' +
-        '<h1>Google JavaScript Style Guide</h1>' + r +
+            '<h1>Google JavaScript Style Guide</h1>' + html +
         '</div>';
     
-    body.addEventListener('click', function(e) {
-    //  Show/Hide sections when clicking on their heading or permalink
-        var target = e.target,
-            parent = target.parentNode,
-            rule = (target.nodeName === 'H3') ?
-                     parent :                     
-                    (target.nodeName === 'A' && parent.nodeName === 'H3') ?
-                        parent.parentNode :
-                        null,
-            cName;
+    // Fix the authors list (replace br with span)
+    var a = body.getElementsByTagName('address'),
+        s = document.createElement('span');
+    
+    for (var i = a.length - 1; i >= 0; i--){
+        var ai = a[i],
+            c = ai.getElementsByTagName('br');
         
-        if(!rule) { return; }
+        for (var k = c.length - 1; k >= 0; k--){
+            ai.replaceChild(s.cloneNode(false), c[k] );            
+        };
+    };
+    
+    body.addEventListener('click', function(e) {
+    //  Show/Hide sections
+        var target = e.target,
+            rule = (isRule(target)) ? target : target.parentNode,
+            cName;
+
+        while(rule && !isRule(rule)) {
+            rule = rule.parentNode;
+        }
+        
+        if(!rule){return;}
         
         cName = rule.className;
         
         if( cName.match(/collapsed/) ) {
             rule.className = cName.replace(/\bcollapsed\b/, '');
-        } else {
+        } else if(target.nodeName === 'H3') {
             rule.className += ' collapsed';
-        }
+        }        
+                
+        function isRule(el) {
+            return el && el.className && el.className.match(/\brule\b/);
+        };        
         
     }, false);
     
